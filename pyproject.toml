@@ -2,7 +2,6 @@
 name = "cellshift"
 description = "XLSX based contract files change year to year at the City of Memphis Department of Public Works. An existing 2025 contract spreadsheet can be easily cast to a 2026 contract spreadsheet using cellshift."
 readme = "README.md"
-requires-python = ">=3.9"
 dependencies = [
     "dworshak-config>=0.2.8",
     "openpyxl>=3.1.5",
