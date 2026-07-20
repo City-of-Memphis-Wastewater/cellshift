@@ -1,0 +1,11 @@
+{
+  "metadata": {
+    "source": "YYYY",
+    "target": "YYYY",
+    "description": "Template mapping"
+  },
+  "cellmap": {
+    "A1": "A1",
+    "A2": "A2"
+  }
+}
