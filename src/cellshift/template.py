@@ -23,10 +23,10 @@ def excel_column_name(col_num: int) -> str:
 
 
 def generate_cast_template(
-    source: str | None,
-    target: str | None,
-    rows: int,
-    cols: int,
+    source: str = "YYYY",
+    target: str = "YYYY",
+    rows: int=50,
+    cols: int=17,
     output_path: str | Path | None = None,
 ) -> Path:
     """
@@ -64,7 +64,7 @@ def generate_cast_template(
     }
 
     if output_path is None:
-        output_path = DEFAULT_TEMPLATE_DIR / f"{source}_to_{target}_template.json"
+        output_path = DEFAULT_TEMPLATE_DIR / f"cast_{source}_to_{target}_template.json"
     else:
         output_path = Path(output_path)
 
