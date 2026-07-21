@@ -4,6 +4,7 @@ from pathlib import Path
 from dworshak_config import DworshakConfig
 
 APP_NAME = "cellshift"
+APP_NAME_PRETTY = "CellShift"
 APP_DIR = Path.home() / f".{APP_NAME}"
 APP_DIR.mkdir(parents=True,exist_ok=True)
 
