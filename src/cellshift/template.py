@@ -53,9 +53,9 @@ def generate_cast_template(
         for row in range(1, rows + 1):
             cell = f"{col_name}{row}"
             if USE_NULL_TARGET:
-                cellmap[cell] = cell
-            else:
                 cellmap[cell] = "null"
+            else:
+                cellmap[cell] = cell
     data = {
         "metadata": {
             "source": source,
