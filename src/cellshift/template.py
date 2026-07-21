@@ -3,7 +3,7 @@ import json
 
 from .context import CAST_DEFINITION_DIR
 DEFAULT_TEMPLATE_DIR = CAST_DEFINITION_DIR
-
+USE_NULL_TARGET = True
 
 def excel_column_name(col_num: int) -> str:
     """
@@ -52,8 +52,10 @@ def generate_cast_template(
         col_name = excel_column_name(col)
         for row in range(1, rows + 1):
             cell = f"{col_name}{row}"
-            cellmap[cell] = cell
-
+            if USE_NULL_TARGET:
+                cellmap[cell] = cell
+            else:
+                cellmap[cell] = "null"
     data = {
         "metadata": {
             "source": source,
