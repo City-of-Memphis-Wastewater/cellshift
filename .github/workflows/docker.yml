@@ -1,6 +1,6 @@
 # .github/workflows/docker.yml
 
-name: Build and push multi-arch copy-n-launch-xlsx image
+name: Build and push multi-arch cellshift image
 
 on:
   release:
@@ -33,7 +33,7 @@ jobs:
           LOWER_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
-            -t ghcr.io/$LOWER_OWNER/copy-n-launch-xlsx:$TAG \
-            -t ghcr.io/$LOWER_OWNER/copy-n-launch-xlsx:latest \
+            -t ghcr.io/$LOWER_OWNER/cellshift:$TAG \
+            -t ghcr.io/$LOWER_OWNER/cellshift:latest \
             -f Dockerfile.multi-dev . \
             --push

@@ -42,10 +42,10 @@ jobs:
       - name: Compute version + naming
         id: meta
         run: |
-          VERSION=$(uv run python -c "from copy_n_launch_xlsx._version import get_version; print(get_version())")
+          VERSION=$(uv run python -c "from cellshift._version import get_version; print(get_version())")
 
           ARCH="${{ matrix.arch }}"
-          APP_NAME="copy-n-launch-xlsx"
+          APP_NAME="cellshift"
 
           DEB_NAME="${APP_NAME}_${VERSION}_${ARCH}.deb"
 
@@ -58,7 +58,7 @@ jobs:
       # ------------------------------------------------------------
       - name: Create package directory structure
         run: |
-          APP_NAME="copy-n-launch-xlsx"
+          APP_NAME="cellshift"
 
           mkdir -p deb/pkg/DEBIAN
           mkdir -p deb/pkg/opt/$APP_NAME
@@ -71,9 +71,9 @@ jobs:
 
       - name: Create venv
         run: |
-          python3 -m venv deb/pkg/opt/copy-n-launch-xlsx/venv
-          deb/pkg/opt/copy-n-launch-xlsx/venv/bin/pip install --upgrade pip
-          deb/pkg/opt/copy-n-launch-xlsx/venv/bin/pip install .
+          python3 -m venv deb/pkg/opt/cellshift/venv
+          deb/pkg/opt/cellshift/venv/bin/pip install --upgrade pip
+          deb/pkg/opt/cellshift/venv/bin/pip install .
           
       # ------------------------------------------------------------
       # Install launcher wrapper
@@ -82,8 +82,8 @@ jobs:
         run: |
           install -Dm755 \
             deb/launcher.sh \
-            deb/pkg/usr/bin/copy-n-launch-xlsx
-          chmod +x deb/pkg/usr/bin/copy-n-launch-xlsx
+            deb/pkg/usr/bin/cellshift
+          chmod +x deb/pkg/usr/bin/cellshift
           
       # ------------------------------------------------------------
       # Desktop entry
@@ -91,17 +91,17 @@ jobs:
       - name: Install desktop entry
         run: |
           install -Dm644 \
-            deb/copy-n-launch-xlsx.desktop \
-            deb/pkg/usr/share/applications/copy-n-launch-xlsx.desktop
+            deb/cellshift.desktop \
+            deb/pkg/usr/share/applications/cellshift.desktop
 
       # ------------------------------------------------------------
       # Install icons (Linux hicolor spec)
       # ------------------------------------------------------------
       - name: Install icons
         run: |
-          APP_NAME="copy-n-launch-xlsx"
+          APP_NAME="cellshift"
 
-          ICON_SRC="src/copy_n_launch_xlsx/data/icons"
+          ICON_SRC="src/cellshift/data/icons"
 
           #cp "$ICON_SRC/max-green_1024x1024.png" \
           #  "deb/pkg/usr/share/icons/hicolor/1024x1024/apps/$APP_NAME.png"
@@ -153,14 +153,14 @@ jobs:
           sudo apt-get install -y ./deb/*.deb
 
           echo "Checking CLI exists..."
-          which copy-n-launch-xlsx
+          which cellshift
 
           echo "Running CLI smoke test..."
-          copy-n-launch-xlsx --help || true
-          copy-n-launch-xlsx --version
+          cellshift --help || true
+          cellshift --version
 
           echo "Import test..."
-          /opt/copy-n-launch-xlsx/venv/bin/python -c "import copy_n_launch_xlsx; print('import ok')"
+          /opt/cellshift/venv/bin/python -c "import cellshift; print('import ok')"
 
       # ------------------------------------------------------------
       # Verify output
@@ -176,7 +176,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
-          name: copy-n-launch-xlsx-${{ steps.meta.outputs.version }}-${{ matrix.arch }}
+          name: cellshift-${{ steps.meta.outputs.version }}-${{ matrix.arch }}
           path: deb/*.deb
 
       # ------------------------------------------------------------
