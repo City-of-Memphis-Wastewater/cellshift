@@ -11,8 +11,8 @@ dependencies = [
 ]
 
 dynamic = ["version"]
-license = "null" # not yet
-requires-python = ">=3.9,<3.15"
+#license = "null" # not yet
+requires-python = ">=3.10,<3.15"
 authors = [
     { name = "George Clayton Bennett", email = "george.bennett@memphistn.gov" },
     { name = "Ranisha Lomax", email = "ranisha.lomax@memphistn.gov" }
@@ -21,3 +21,71 @@ maintainers = [
     { name = "George Clayton Bennett", email = "george.bennett@memphistn.gov" },
     { name = "Ranisha Lomax", email = "ranisha.lomax@memphistn.gov" }
 ]
+
+# ---
+
+classifiers=[
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: OS Independent",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers", # library and documentation
+    "Intended Audience :: Science/Research", # Technical manuals, engineering
+    "Intended Audience :: Other Audience", # Government/engineering docs
+    "Topic :: File Formats",
+    "Topic :: Office/Business",
+    "Topic :: Text Processing :: General",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Environment :: Console",
+    "Environment :: MacOS X",
+    "Environment :: Win32 (MS Windows)",
+    "Typing :: Typed",
+    "Development Status :: 3 - Alpha",
+    #"Development Status :: 4 - Beta",
+    #"Development Status :: 5 - Production/Stable",
+]
+
+keywords = [
+    "annual-contracts",
+    "document-processing",
+]
+
+[project.urls]
+Homepage = "https://github.com/city-of-memphis-wastewater/cellshift"
+Repository = "https://github.com/city-of-memphis-wastewater/cellshift"
+Issues = "https://github.com/city-of-memphis-wastewater/cellshift/issues"
+Changelog = "https://raw.githubusercontent.com/city-of-memphis-wastewater/cellshift/main/docs/CHANGELOG.md"
+
+[project.scripts]
+cellshift = "cellshift.cli:app"
+
+
+#[project.optional-dependencies]
+
+# add with `uv sync --group dev`, plus other extras, like `--extra pdfium`
+[dependency-groups]
+dev = [
+    "build>=1.3.0",
+    "pyinstaller>=6.17.0 ; platform_system == 'Linux' and platform_machine != 'aarch64'", # to avoid on termux
+    "shiv>=1.0.8",
+    "ruff>=0.7.0 ; platform_system == 'Linux' and platform_machine != 'aarch64'", # to avoid on termux
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+]
+
+
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv.sources]
+cellshift = { path = "src/cellshift" }
+#pyhabitat = { path = "../pyhabitat/dist/pyhabitat-1.2.3-py3-none-any.whl" }
+
+[tool.setuptools.dynamic]
+version = {file = "src/cellshift/VERSION"}
