@@ -21,7 +21,6 @@ def excel_column_name(col_num: int) -> str:
         name = chr(65 + remainder) + name
     return name
 
-
 def generate_cast_template(
     source: str = "YYYY",
     target: str = "YYYY",
