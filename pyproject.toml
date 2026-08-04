@@ -1,6 +1,6 @@
 [project]
 name = "cellshift"
-description = "XLSX based contract files change year to year at the City of Memphis Department of Public Works. An existing 2025 contract spreadsheet can be easily cast to a 2026 contract spreadsheet using cellshift."
+description = "XLSX based contract files change year to year at the City of Memphis Department of Public Works. For example, an existing 2025 contract spreadsheet can be easily cast to a 2026 contract spreadsheet using cellshift."
 readme = "README.md"
 dependencies = [
     "dworshak-config>=0.2.8",
