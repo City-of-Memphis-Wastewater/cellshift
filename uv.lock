@@ -63,7 +63,7 @@ requires-dist = [
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "pyhabitat", specifier = ">=1.3.9" },
     { name = "typer", specifier = ">=0.27.0" },
-    { name = "typer-helptree", specifier = ">=0.2.11" },
+    { name = "typer-helptree", specifier = ">=0.2.12" },
 ]
 
 [package.metadata.requires-dev]
@@ -551,7 +551,7 @@ wheels = [
 
 [[package]]
 name = "typer-helptree"
-version = "0.2.11"
+version = "0.2.12"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
@@ -559,9 +559,9 @@ dependencies = [
     { name = "rich" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4f/9b/9ba1f2a02c2c5fde02b28423434551a1ba7933c58a94f4b69296b45ae15b/typer_helptree-0.2.11.tar.gz", hash = "sha256:b497d78f78fb815496655224be5f5d545355157c0a898731ad9908ab76083d57", size = 12476, upload-time = "2026-07-07T14:51:10.115Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a0/70/8a9e2da648f6a63d5ea140520557d9895e07b3246922322ce16e877e678c/typer_helptree-0.2.12.tar.gz", hash = "sha256:2677bd412f6c1a0481ccc1912a2e7968c57a1f8221801804bb4ac4de24b5c519", size = 12480, upload-time = "2026-08-04T23:24:35.125Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9f/33/05b5c45e610e8b6b530dabc1d40fc6167f94b9693ccce2a0147562f02b6a/typer_helptree-0.2.11-py3-none-any.whl", hash = "sha256:173dca5b27f93fc67060484ff468243317d75b94ca3538365d7ecc87bd2bb725", size = 14379, upload-time = "2026-07-07T14:51:08.705Z" },
+    { url = "https://files.pythonhosted.org/packages/29/01/9c1452db9fa5504945cbce123dbd5f9e01ea10f6c7379210794df15eed3a/typer_helptree-0.2.12-py3-none-any.whl", hash = "sha256:b328673474234c4c60994a34e52091e1eb530efb533294cd916f0f4d88e5cd59", size = 14371, upload-time = "2026-08-04T23:24:33.869Z" },
 ]
 
 [[package]]
