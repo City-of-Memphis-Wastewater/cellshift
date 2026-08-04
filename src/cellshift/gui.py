@@ -12,7 +12,6 @@ import ctypes
 import sys
 import logging
 
-from build_executable import purge_raw_unix_structure_from_macos_build
 # --- Core Imports ---
 
 from .paths import SRC_FOLDER_NAME

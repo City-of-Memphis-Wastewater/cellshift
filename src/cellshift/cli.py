@@ -20,7 +20,7 @@ from .context import DESCRIPTION_STR, APP_NAME
 from .context import DESCRIPTION_STR
 from .logging_setup import configure_logging_for_application
 from ._version import __version__
-from .template import generate_cast_template
+from .template import generate_cast_template, cast_spreasheet_source_year_to_target_year
 try:
     from .webapp import run_webapp
 except:
@@ -67,19 +67,28 @@ def main(
 
 add_typer_helptree(app = app, console = console, version = __version__, hidden = False)
 
-@app.command(name="gencast")
+@app.command(name="template-json")
 def generate_blank_cast_json_file(
     )->None:
     """
-    Run the core function.
+    Generate  template JSON file for defining the spreadsheet cast.
     """
-    result = generate_cast_template()
-    destination = result.destination
+    destination = generate_cast_template() 
+    #result = generate_cast_template()
+    #destination = result.destination
 
-    if result.is_new:
+    '''if result.is_new:
         logger.debug(f"File created:\n{destination}\n")
     elif not result.is_new:
         logger.debug(f"File exists:\n{destination}\n")
+    '''
+@app.command(name="run-spreadsheet-cast")
+def cast_spreadsheet(
+    )->None:
+    """
+    Generate  template JSON file for defining the spreadsheet cast.
+    """
+    destination = cast_spreasheet_source_year_to_target_year()
 
 @app.command(name="webapp")
 def webapp(

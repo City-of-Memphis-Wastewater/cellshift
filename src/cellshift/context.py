@@ -21,17 +21,21 @@ SAMPLE_CAST_DEFINITION_FILE = "formcast_2025_to_2026_CityOfMemphis_contracts.jso
 
 CAST_DEFINITION_DIR.mkdir(parents=True, exist_ok= True)
 
-config_mngr.set(service=APP_NAME,item="cast_definition_dir",value=str(CAST_DEFINITION_DIR), overwrite=False)
-cast_definition_dir = Path(config_mngr.get(service=APP_NAME,item="cast_definition_dir")).expanduser().resolve()
-if not cast_definition_dir.exists():
-    cast_definition_dir = CAST_DEFINITION_DIR
 
-# ---
+def get_configured_json_cast_file():
+    config_mngr.set(service=APP_NAME,item="cast_definition_dir",value=str(CAST_DEFINITION_DIR), overwrite=False)
+    cast_definition_dir = Path(config_mngr.get(service=APP_NAME,item="cast_definition_dir")).expanduser().resolve()
+    if not cast_definition_dir.exists():
+        cast_definition_dir = CAST_DEFINITION_DIR
 
-config_mngr.set(service=APP_NAME,item="cast_definition_file", value= DEFAULT_CAST_DEFINITION_FILE, overwrite= False)
+    # ---
 
-cast_definition_filename = str(config_mngr.get(service=APP_NAME,item="cast_definition_file"))
+    config_mngr.set(service=APP_NAME,item="cast_definition_file", value= DEFAULT_CAST_DEFINITION_FILE, overwrite= False)
 
-cast_definition_filepath = cast_definition_dir / cast_definition_filename
-if not cast_definition_filepath.exists():
-    cast_definition_filepath = CAST_DEFINITION_DIR / DEFAULT_CAST_DEFINITION_FILE
+    cast_definition_filename = str(config_mngr.get(service=APP_NAME,item="cast_definition_file"))
+
+    cast_definition_filepath = cast_definition_dir / cast_definition_filename
+    if not cast_definition_filepath.exists():
+        cast_definition_filepath = CAST_DEFINITION_DIR / DEFAULT_CAST_DEFINITION_FILE
+
+    return cast_definition_filepath

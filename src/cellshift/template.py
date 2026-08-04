@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 
-from .context import CAST_DEFINITION_DIR
+from .context import CAST_DEFINITION_DIR, get_configured_json_cast_file
 DEFAULT_TEMPLATE_DIR = CAST_DEFINITION_DIR
 USE_NULL_TARGET = True
 
@@ -75,3 +75,9 @@ def generate_cast_template(
         json.dump(data, f, indent=2)
 
     return output_path
+
+def cast_spreasheet_source_year_to_target_year(source_year: int, target_year:int,json_cast_filepath:str|Path|None=None)->Path: # later return a result class instance
+    if json_cast_filepath is None:
+        json_cast_filepath = get_configured_json_cast_file()
+
+    pass # incomplete
