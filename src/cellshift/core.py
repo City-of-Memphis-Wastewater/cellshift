@@ -81,7 +81,7 @@ def generate_cast_template(
     print(f"Generated cast template ({detected_range}) -> {output_path}")
     return output_path
 
-def cast_spreasheet_source_year_to_target_year(source_year: int, target_year:int,json_cast_filepath:str|Path|None=None)->Path: # later return a result class instance
+def cast_spreadsheet_source_year_to_target_year(source_year: int, target_year:int,json_cast_filepath:str|Path|None=None)->Path: # later return a result class instance
     if json_cast_filepath is None:
         json_cast_filepath = get_configured_json_cast_file()
 

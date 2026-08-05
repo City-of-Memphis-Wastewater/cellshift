@@ -20,7 +20,7 @@ from .context import DESCRIPTION_STR, APP_NAME
 from .context import DESCRIPTION_STR
 from .logging_setup import configure_logging_for_application
 from ._version import __version__
-from .core import generate_cast_template, cast_spreasheet_source_year_to_target_year
+from .core import generate_cast_template, cast_spreadsheet_source_year_to_target_year
 try:
     from .webapp import run_webapp
 except:
@@ -88,7 +88,7 @@ def cast_spreadsheet(
     """
     Perform the spreadsheet cast, the core functionality of cellshift.
     """
-    destination = cast_spreasheet_source_year_to_target_year()
+    destination = cast_spreadsheet_source_year_to_target_year()
 
 @app.command(name="webapp")
 def webapp(

@@ -10,7 +10,7 @@ from .context import SRC_FOLDER_NAME
 __all__ = [
     "__version__",
     "generate_cast_template",
-    "cast_spreasheet_source_year_to_target_year",
+    "cast_spreadsheet_source_year_to_target_year",
     "__gui_easteregg_enabled__", # Re-added for REPL discovery
 ]
 
@@ -22,8 +22,8 @@ def _check_easteregg_env() -> bool:
 # 2. Fully dynamic attribute routing
 def __getattr__(name: str):
 
-    if name == "cast_spreasheet_source_year_to_target_year":
-        from .core import cast_spreasheet_source_year_to_target_year
+    if name == "cast_spreadsheet_source_year_to_target_year":
+        from .core import cast_spreadsheet_source_year_to_target_year
         return copy_then_launch
 
     if name == "generate_cast_template":
