@@ -82,7 +82,7 @@ def generate_blank_cast_json_file(
     elif not result.is_new:
         logger.debug(f"File exists:\n{destination}\n")
     '''
-@app.command(name="run-spreadsheet-cast")
+@app.command(name="cast")
 def cast_spreadsheet(
     )->None:
     """
