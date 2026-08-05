@@ -167,12 +167,16 @@ class GuiApp:
         control_frame.grid_columnconfigure(1, weight=1)
         control_frame.grid_columnconfigure(2, weight=1)
 
-    def _generate_blank_cast_json(self):
+    def generate_blank_cast_json(self):
         # tk var getters
         generate_cast_template()
 
-    def _run_cast(self):
-        pass
+    def run_cast(self):
+        """
+        The core functionality of the cellshift app, spreadsheet casting.
+        """
+        #tk gar getters
+        cast_spreadsheet_source_year_to_target_year()
 
     def _show_target_files_in_system_explorer(self) -> None:
         """
