@@ -96,8 +96,8 @@ def webapp(
     """
     Serve the web interface to localhost.
     """
+    console.print("The webapp is not yet in service. Please use the GUI or the CLI.")
     run_webapp()
-
 
 @app.command(name="gui")
 def gui_command(
