@@ -86,7 +86,7 @@ def generate_blank_cast_json_file(
 def cast_spreadsheet(
     )->None:
     """
-    Generate  template JSON file for defining the spreadsheet cast.
+    Perform the spreadsheet cast, the core functionality.
     """
     destination = cast_spreasheet_source_year_to_target_year()
 
