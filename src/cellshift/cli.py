@@ -98,6 +98,7 @@ def webapp(
     """
     console.print("The webapp is not yet in service. Please use the GUI or the CLI.")
     run_webapp()
+    # do no copy cnlx architecture, in terms of launch. investigate how eds launch is smoother than pdflinkcheck and cnlx.
 
 @app.command(name="gui")
 def gui_command(
