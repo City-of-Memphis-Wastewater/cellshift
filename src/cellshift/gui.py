@@ -17,7 +17,7 @@ import logging
 from .paths import SRC_FOLDER_NAME
 from ._version import get_version, __version__
 from .tk_utils import center_window_on_primary
-from .template import generate_cast_template
+from .core import generate_cast_template, cast_spreasheet_source_year_to_target_year
 from .context import (
             APP_NAME, 
             )
