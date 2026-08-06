@@ -17,7 +17,7 @@ import tempfile
 from pyhabitat.environment import on_macos
 
 ##from cellshift.datacopy import ensure_data_files_for_build
-from cellshift._version import get_version, __version__
+from cellshift._version import  __version__
 from cellshift.paths import (
         SRC_FOLDER_NAME, APP_NAME, APP_NAME_PRETTY, get_ico_icon, get_icns_icon
         )
@@ -26,7 +26,6 @@ from build_utils.build_utils import PyinsMode, form_dynamic_name
 from build_utils.linux_app_image import post_process_linux_build
     
 # --- Configuration ---
-CLI_MAIN_FILE = Path.cwd() / 'src' / SRC_FOLDER_NAME / "__main__.py"
 DIST_DIR = Path("dist")
 DIST_DIR_ONEFILE = DIST_DIR / PyinsMode.ONEFILE.value 
 DIST_DIR_ONEDIR = DIST_DIR / PyinsMode.ONEDIR.value
@@ -327,7 +326,7 @@ def run_build_executable(src_folder_name: str):
     is_windowed_build = (pyhabitat.on_windows() or pyhabitat.on_macos()) and (mode == PyinsMode.ONEDIR) and pyhabitat.tkinter_is_available()
 
     try:
-        package_version = get_version()
+        package_version = __version__
         if package_version == "0.0.0":
             print("FATAL: Cannot find package version in pyproject.toml.", file=sys.stderr)
             sys.exit(1)
