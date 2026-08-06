@@ -190,9 +190,9 @@ def call_full_pyinstaller_command(full_command):
 def run_pyinstaller(
         dynamic_exe_name: str, 
         main_script_path: Path,
+        src_folder_name: str
         mode: PyinsMode = PyinsMode.ONEDIR,
         is_windowed_build: bool = True,
-        src_folder_name: str
         ):
     """
     Run PyInstaller to build the executable.
@@ -342,6 +342,7 @@ def run_build_executable(src_folder_name: str):
         app_path, app_filename = run_pyinstaller(
             executable_descriptor, 
             cli_main_file,
+            src_folder_name,
             mode = mode,
             is_windowed_build= is_windowed_build,
             )
