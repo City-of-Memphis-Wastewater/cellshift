@@ -18,8 +18,11 @@ from pyhabitat.environment import on_macos
 
 ##from cellshift.datacopy import ensure_data_files_for_build
 from cellshift._version import  __version__
+from cellshift.context import (
+        SRC_FOLDER_NAME, APP_NAME, APP_NAME_PRETTY
+        )
 from cellshift.paths import (
-        SRC_FOLDER_NAME, APP_NAME, APP_NAME_PRETTY, get_ico_icon, get_icns_icon
+        get_ico_icon, get_icns_icon
         )
 
 from build_utils.build_utils import PyinsMode, form_dynamic_name
@@ -190,7 +193,7 @@ def call_full_pyinstaller_command(full_command):
 def run_pyinstaller(
         dynamic_exe_name: str, 
         main_script_path: Path,
-        src_folder_name: str
+        src_folder_name: str,
         mode: PyinsMode = PyinsMode.ONEDIR,
         is_windowed_build: bool = True,
         ):
