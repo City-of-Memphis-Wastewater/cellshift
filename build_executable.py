@@ -37,6 +37,9 @@ RC_FILE = Path('build_assets') / 'version.rc'
 PROJECT_ROOT = Path(__file__).resolve().parent
 HOOKS_DIR_ABS = PROJECT_ROOT / "pyinstaller_hooks"
 
+def g3t_cli_main_file(src_folder_name:str)->str:
+    return Path.cwd() / 'src' / src_folder_name / "__main__.py"
+     
 # --- Windows Resource File (version.rc) ---
 def generate_rc_file(package_version: str):
     """Generates the .rc file using the provided version string, only on Windows."""
@@ -114,7 +117,7 @@ def determine_app_path_and_dist_path_and_app_filename(dynamic_exe_name:str, mode
         print(f"Executable will be located at: {app_path.resolve()}", file=sys.stderr) 
         return app_filename, dist_path,app_path, ext
 
-def construct_pyinstaller_command(dynamic_exe_name, dist_path,mode, main_script_path, is_windowed_build):    
+def construct_pyinstaller_command(dynamic_exe_name, dist_path,mode, main_script_path, is_windowed_build,src_folder_name):    
     # PyInstaller Command Construction
     base_command = [
         #'pyinstaller',
@@ -127,7 +130,7 @@ def construct_pyinstaller_command(dynamic_exe_name, dist_path,mode, main_script_
         f'--paths={PROJECT_ROOT / "src"}',
 
         # --- Include your non-py data folders into the built bundle layout ---
-        f'--add-data={PROJECT_ROOT / "src" / SRC_FOLDER_NAME / "data"}{os.path.pathsep}{SRC_FOLDER_NAME}/data',
+        f'--add-data={PROJECT_ROOT / "src" / src_folder_name / "data"}{os.path.pathsep}{src_folder_name}/data',
         
         # Output paths
         f'--distpath={dist_path}',
@@ -190,12 +193,13 @@ def run_pyinstaller(
         main_script_path: Path,
         mode: PyinsMode = PyinsMode.ONEDIR,
         is_windowed_build: bool = True,
+        src_folder_name: str
         ):
     """
     Run PyInstaller to build the executable.
     """
     
-    print(f"--- {SRC_FOLDER_NAME} Executable Builder ---")
+    print(f"--- {src_folder_name} Executable Builder ---")
     app_filename, dist_path, app_path, ext = determine_app_path_and_dist_path_and_app_filename(dynamic_exe_name, mode, is_windowed_build)
 
     # Clean and Setup
@@ -204,7 +208,7 @@ def run_pyinstaller(
 
 
     # Determine execution path (Run PyInstaller directly, assuming it's in PATH/venv)
-    full_command = construct_pyinstaller_command(dynamic_exe_name, dist_path,mode, main_script_path, is_windowed_build)
+    full_command = construct_pyinstaller_command(dynamic_exe_name, dist_path,mode, main_script_path, is_windowed_build, src_folder_name)
     call_full_pyinstaller_command(full_command)
     
     purge_raw_unix_structure_from_macos_build(dynamic_exe_name, mode)
@@ -307,7 +311,7 @@ def test_build_artifacts(app_path):
         subprocess.run([str(app_path), "--help"], check=True)
     print("Testing complete.")
 
-def run_build_executable():
+def run_build_executable(src_folder_name: str):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--mode",
@@ -332,12 +336,13 @@ def run_build_executable():
         generate_rc_file(package_version)
 
         # 3. Determine the executable name (without the extension)
-        executable_descriptor = form_dynamic_name(SRC_FOLDER_NAME, package_version, mode)
+        executable_descriptor = form_dynamic_name(src_folder_name, package_version, mode)
 
+        cli_main_file = get_cli_main_file(src_folder_name)
         # 4. Run the installer
         app_path, app_filename = run_pyinstaller(
             executable_descriptor, 
-            CLI_MAIN_FILE, 
+            cli_main_file,
             mode = mode,
             is_windowed_build= is_windowed_build,
             )
@@ -359,4 +364,4 @@ def run_build_executable():
         sys.exit(1)
     
 if __name__ == "__main__":
-    run_build_executable()
+    run_build_executable(src_folder_name=SRC_FOLDER_NAME)
