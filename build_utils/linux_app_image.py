@@ -101,9 +101,9 @@ Terminal=true
 def post_process_linux_build(app_path: Path, dynamic_exe_name: str, mode: PyinsMode):
     """Handles downstream staging tasks on Linux platforms."""
     # Ensure pyhabitat has an on_linux wrapper, or fallback to sys.platform
-    is_linux = getattr(pyhabitat, "on_linux", lambda: sys.platform.startswith("linux"))()
-    
-    if is_linux and mode == PyinsMode.ONEDIR:
+    on_linux = getattr(pyhabitat, "on_linux", lambda: sys.platform.startswith("linux"))()
+    on_termux = pyhabitat.on_termux()
+    if not(on_termux) and on_linux and mode == PyinsMode.ONEDIR:
         # app_path for ONEDIR points to the internal executable; 
         # we need its parent folder containing the dependency libraries
         bundle_dir = app_path.parent
