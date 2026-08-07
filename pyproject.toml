@@ -62,7 +62,7 @@ Issues = "https://github.com/city-of-memphis-wastewater/cellshift/issues"
 Changelog = "https://raw.githubusercontent.com/city-of-memphis-wastewater/cellshift/main/docs/CHANGELOG.md"
 
 [project.scripts]
-cellshift = "cellshift.cli:app"
+cellshift = "cellshift.__main__:app"
 
 
 #[project.optional-dependencies]
