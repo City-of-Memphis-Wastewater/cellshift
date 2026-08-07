@@ -14,7 +14,10 @@ import os
 logger = logging.getLogger(__name__)
 
 from cellshift.paths import (
-        APP_NAME_PRETTY, get_ico_icon, get_png_icon
+        get_ico_icon, get_png_icon
+        )
+from cellshift.context import (
+        APP_NAME_PRETTY
         )
 from build_utils.build_utils import PyinsMode
 

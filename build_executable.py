@@ -39,7 +39,7 @@ RC_FILE = Path('build_assets') / 'version.rc'
 PROJECT_ROOT = Path(__file__).resolve().parent
 HOOKS_DIR_ABS = PROJECT_ROOT / "pyinstaller_hooks"
 
-def g3t_cli_main_file(src_folder_name:str)->str:
+def get_cli_main_file(src_folder_name:str)->str:
     return Path.cwd() / 'src' / src_folder_name / "__main__.py"
      
 # --- Windows Resource File (version.rc) ---
