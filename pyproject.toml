@@ -8,7 +8,7 @@ dependencies = [
     "pyhabitat>=1.3.9",
     "typer>=0.27.0",
     "typer-helptree>=0.2.12",
-    "maxson-build-utils>=0.1.0"
+    "maxson-build-utils>=0.1.1"
 ]
 
 dynamic = ["version"]
@@ -87,7 +87,9 @@ build-backend = "setuptools.build_meta"
 [tool.uv.sources]
 cellshift = { path = "src/cellshift" }
 #pyhabitat = { path = "../pyhabitat/dist/pyhabitat-1.2.3-py3-none-any.whl" }
-maxson-build-utils = { path = "../maxson-build-utils/dist/maxson_build_utils-0.1.0-py3-none-any.whl" }
+#maxson-build-utils = { path = "../maxson-build-utils/dist/maxson_build_utils-0.1.1-py3-none-any.whl"}
+maxson-build-utils = { path = "../maxson-build-utils/", editable = true }
+
 
 [tool.setuptools.dynamic]
 version = {file = "src/cellshift/VERSION"}
