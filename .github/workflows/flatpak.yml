@@ -36,7 +36,8 @@ jobs:
         run: |
           uv export --format requirements-txt --no-editable --no-dev > requirements.txt
           
-      - name: Vendor Python Dependencies for Sandbox Environment
+      - name: Vendor Python Dependencies for Sandbox Environment, defunt
+        if: false
         run: |
           mkdir -p vendor-wheels
 
@@ -48,6 +49,9 @@ jobs:
           uv run pip download \
             dist/*.whl \
             -d vendor-wheels
+
+      - name: Vendor Flatpak Assets
+        run: uv run maxson-build-utils prepare-flatpak
 
       - name: Check wheels
         run: |

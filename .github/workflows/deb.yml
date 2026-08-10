@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v5
         with:
           version: "latest"
 
@@ -33,110 +33,39 @@ jobs:
           sudo apt-get install -y dpkg-dev fakeroot
 
       - name: Install Python dependencies
-        run: |
-          uv sync --group dev
+        run: uv sync --group dev
 
-      # ------------------------------------------------------------
-      # Extract version metadata
-      # ------------------------------------------------------------
-      - name: Compute version + naming
+      - name: Extract version metadata
         id: meta
         run: |
           VERSION=$(uv run python -c "from cellshift._version import get_version; print(get_version())")
-
-          ARCH="${{ matrix.arch }}"
-          APP_NAME="cellshift"
-
-          DEB_NAME="${APP_NAME}_${VERSION}_${ARCH}.deb"
-
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "arch=$ARCH" >> $GITHUB_OUTPUT
-          echo "deb_name=$DEB_NAME" >> $GITHUB_OUTPUT
 
       # ------------------------------------------------------------
-      # Create Debian filesystem layout
+      # Stage application files into filesystem layout
       # ------------------------------------------------------------
-      - name: Create package directory structure
+      - name: Stage application venv & assets
         run: |
           APP_NAME="cellshift"
+          
+          # App virtual environment
+          python3 -m venv "deb/pkg/opt/$APP_NAME/venv"
+          "deb/pkg/opt/$APP_NAME/venv/bin/pip" install --upgrade pip
+          "deb/pkg/opt/$APP_NAME/venv/bin/pip" install .
 
-          mkdir -p deb/pkg/DEBIAN
-          mkdir -p deb/pkg/opt/$APP_NAME
-          mkdir -p deb/pkg/usr/bin
-          mkdir -p deb/pkg/usr/share/applications
+          # Launcher & Desktop Entry
+          install -Dm755 deb/launcher.sh "deb/pkg/usr/bin/$APP_NAME"
+          install -Dm644 deb/cellshift.desktop deb/pkg/usr/share/applications/cellshift.desktop
 
-          # Icon directories (hicolor standard)
-          #mkdir -p deb/pkg/usr/share/icons/hicolor/1024x1024/apps
+          # Icons
           mkdir -p deb/pkg/usr/share/icons/hicolor/scalable/apps
-
-      - name: Create venv
-        run: |
-          python3 -m venv deb/pkg/opt/cellshift/venv
-          deb/pkg/opt/cellshift/venv/bin/pip install --upgrade pip
-          deb/pkg/opt/cellshift/venv/bin/pip install .
-          
-      # ------------------------------------------------------------
-      # Install launcher wrapper
-      # ------------------------------------------------------------
-      - name: Install launcher
-        run: |
-          install -Dm755 \
-            deb/launcher.sh \
-            deb/pkg/usr/bin/cellshift
-          chmod +x deb/pkg/usr/bin/cellshift
-          
-      # ------------------------------------------------------------
-      # Desktop entry
-      # ------------------------------------------------------------
-      - name: Install desktop entry
-        run: |
-          install -Dm644 \
-            deb/cellshift.desktop \
-            deb/pkg/usr/share/applications/cellshift.desktop
+          cp src/cellshift/data/icons/max-green.svg "deb/pkg/usr/share/icons/hicolor/scalable/apps/$APP_NAME.svg"
 
       # ------------------------------------------------------------
-      # Install icons (Linux hicolor spec)
+      # Render control file & build .deb package via maxson-build-utils
       # ------------------------------------------------------------
-      - name: Install icons
-        run: |
-          APP_NAME="cellshift"
-
-          ICON_SRC="src/cellshift/data/icons"
-
-          #cp "$ICON_SRC/max-green_1024x1024.png" \
-          #  "deb/pkg/usr/share/icons/hicolor/1024x1024/apps/$APP_NAME.png"
-
-          cp "$ICON_SRC/max-green.svg" \
-            "deb/pkg/usr/share/icons/hicolor/scalable/apps/$APP_NAME.svg"
-
-      # ------------------------------------------------------------
-      # Create DEBIAN control file
-      # ------------------------------------------------------------
-      - name: Generate DEBIAN control file from template
-        run: |
-          set -euo pipefail
-
-          VERSION="${{ steps.meta.outputs.version }}"
-          ARCH="${{ matrix.arch }}"
-
-          mkdir -p deb/pkg/DEBIAN
-
-          sed -e "s/__VERSION__/${VERSION}/g" \
-              -e "s/__ARCH__/${ARCH}/g" \
-              deb/control.in > deb/pkg/DEBIAN/control
-
-          # echo "" >> deb/pkg/DEBIAN/control
-
-          cat deb/pkg/DEBIAN/control
-          
-      # ------------------------------------------------------------
-      # Build .deb
-      # ------------------------------------------------------------
-      - name: Build Debian package
-        run: |
-          DEB_NAME="${{ steps.meta.outputs.deb_name }}"
-
-          fakeroot dpkg-deb --build deb/pkg "deb/$DEB_NAME"
+      - name: Build .deb Package
+        run: uv run maxson-build-utils build-deb --arch ${{ matrix.arch }}
 
       # ------------------------------------------------------------
       # Smoke test installed package
@@ -144,47 +73,24 @@ jobs:
       - name: Smoke test .deb package
         run: |
           set -euo pipefail
-
-          DEB_FILE=$(ls deb/*.deb | head -n 1)
-
-          echo "Testing package: $DEB_FILE"
-
-          sudo apt-get update
           sudo apt-get install -y ./deb/*.deb
 
-          echo "Checking CLI exists..."
           which cellshift
-
-          echo "Running CLI smoke test..."
-          cellshift --help || true
           cellshift --version
-
-          echo "Import test..."
           /opt/cellshift/venv/bin/python -c "import cellshift; print('import ok')"
 
       # ------------------------------------------------------------
-      # Verify output
-      # ------------------------------------------------------------
-      - name: Inspect output
-        run: |
-          echo "Generated Debian package:"
-          ls -lah deb/
-
-      # ------------------------------------------------------------
-      # Upload artifact
+      # Upload & Publish
       # ------------------------------------------------------------
       - name: Upload artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: cellshift-${{ steps.meta.outputs.version }}-${{ matrix.arch }}
           path: deb/*.deb
 
-      # ------------------------------------------------------------
-      # Attach to GitHub Release
-      # ------------------------------------------------------------
       - name: Publish release asset
         if: github.event_name == 'release'
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v2
         with:
           files: deb/*.deb
         env:
