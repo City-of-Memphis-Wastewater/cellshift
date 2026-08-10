@@ -1,0 +1,7 @@
+Package: cellshift
+Version: __VERSION__
+Architecture: __ARCH__
+Maintainer: George Bennett <george.bennett@memphistn.gov>
+Section: utils
+Priority: optional
+Description: Cellshift tool for year-to-year contract generation.
