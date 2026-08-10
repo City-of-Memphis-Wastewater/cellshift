@@ -4,6 +4,7 @@ __pycache__/
 build/
 dist/
 wheels/
+vendor-wheels/
 *.egg-info
 .python-version
 

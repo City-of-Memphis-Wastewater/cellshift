@@ -1,4 +1,3 @@
-# .github/workflows/flatpak.yml
 name: Build Flatpak Bundle
 
 on:
@@ -10,7 +9,6 @@ jobs:
   flatpak:
     name: Build Flatpak Application
     runs-on: ubuntu-latest
-    # Run inside the official Flathub builder container environment
     container:
       image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-24.08
       options: --privileged
@@ -19,54 +17,23 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v5
         with:
           version: "latest"
 
-
-      - name: Get Flatpak Builder Tools
-        if: false
-        run: |
-          git clone https://github.com/flatpak/flatpak-builder-tools.git
-
-      - name: generate requirements.txt
-        run: |
-          uv export --format requirements-txt --no-editable --no-dev > requirements.txt
-          
-      - name: Vendor Python Dependencies for Sandbox Environment, defunt
-        if: false
-        run: |
-          mkdir -p vendor-wheels
-
-          uv build
-
-          #uv run pip download . -d vendor-wheels
-          #uv run pip download . "setuptools>=64" -d vendor-wheels
-          #uv run pip download . "setuptools>=64" 
-          uv run pip download \
-            dist/*.whl \
-            -d vendor-wheels
+      - name: Generate requirements.txt
+        run: uv export --format requirements-txt --no-editable --no-dev > requirements.txt
 
       - name: Vendor Flatpak Assets
         run: uv run maxson-build-utils prepare-flatpak
 
-      - name: Check wheels
+      - name: Verify vendored wheels
         run: |
-          echo "Vendor wheels:"
+          echo "Vendored wheels count: $(find vendor-wheels -name '*.whl' | wc -l)"
           ls -lah vendor-wheels
-
-          echo
-          echo "Downloaded packages:"
-          find vendor-wheels -name '*.whl'
-          echo "Contents of vendor-wheels:"
-          find vendor-wheels -maxdepth 1 -name '*.whl' | sort
-
-          echo
-          echo "Wheel count:"
-          find vendor-wheels -name '*.whl' | wc -l
 
       - name: Compute build metadata
         run: |
@@ -79,45 +46,31 @@ jobs:
           echo "ARCH=$ARCH" >> $GITHUB_ENV
           echo "SHA=$SHA" >> $GITHUB_ENV
           echo "FILENAME=$FILENAME" >> $GITHUB_ENV
-          
+
       - name: Build and Package Flatpak Bundle
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           manifest-path: io.github.city_of_memphis_wastewater.cellshift.yaml
-          #bundle: cellshift.flatpak
-          #bundle: cellshift-${{ env.VERSION }}-${{ env.ARCH }}.flatpak
           bundle: ${{ env.FILENAME }}
           run-tests: false
           cache-key: flatpak-builder-${{ github.sha }}
 
-      - name: Debug output files
-        run: |
-          find . -name "*.flatpak" -ls
-          
-      - name: Install for Smoke test
-        run: |
-          #flatpak install --user --bundle --noninteractive ./cellshift.flatpak
-          #flatpak install --user --bundle --noninteractive ./${{ env.FILENAME }}
-          FLATPAK_FILE=$(find . -name "*.flatpak" | head -n 1)
-          flatpak install --user --bundle --noninteractive "$FLATPAK_FILE"
-          flatpak list
-          flatpak info io.github.city_of_memphis_wastewater.cellshift
-
-      - name: Assert CLI works, smoke test
+      - name: Smoke test Flatpak installation
         run: |
           set -e
+          FLATPAK_FILE=$(find . -name "*.flatpak" | head -n 1)
+          flatpak install --user --bundle --noninteractive "$FLATPAK_FILE"
+          
           flatpak run io.github.city_of_memphis_wastewater.cellshift --help
           flatpak run io.github.city_of_memphis_wastewater.cellshift --version
           flatpak run io.github.city_of_memphis_wastewater.cellshift copylaunch --help
 
       - name: Attach Flatpak Asset to GitHub Release
         if: github.event_name == 'release'
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v2
         with:
-          #files: ${{ env.FILENAME }}
           files: "*.flatpak"
           overwrite_files: true
-          # Use the release tag if available, otherwise default to a test tag or draft
           tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'v0.0.0-draft' }}
           draft: ${{ github.event_name == 'workflow_dispatch' }}
         env:
