@@ -25,8 +25,8 @@ from cellshift.paths import (
         get_ico_icon, get_icns_icon
         )
 
-from build_utils.build_utils import PyinsMode, form_dynamic_name
-from build_utils.linux_app_image import post_process_linux_build
+from maxson_build_utils.build_utils import PyinsMode, form_dynamic_name
+from maxson_build_utils.linux_app_image import post_process_linux_build
     
 # --- Configuration ---
 DIST_DIR = Path("dist")
