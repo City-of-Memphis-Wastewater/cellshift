@@ -7,6 +7,9 @@ on:
 
 jobs:
   appimage:
+    # Explicitly grant write access so the called reusable workflow can inherit it
+    permissions:
+      contents: write
     uses: City-of-Memphis-Wastewater/maxson-build-utils/.github/workflows/reusable-appimage.yml@main
     with:
       app_dir: "dist/onedir/cellshift"
