@@ -1,0 +1,15 @@
+name: Build AppImage
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  appimage:
+    uses: City-of-Memphis-Wastewater/maxson-build-utils/.github/workflows/reusable-appimage.yml@main
+    with:
+      app_dir: "dist/onedir/cellshift"
+      exe_name: "cellshift"
+      pretty_name: "CellShift"
+      icon_path: "src/cellshift/data/icons/placeholder_1024x1024.png"
