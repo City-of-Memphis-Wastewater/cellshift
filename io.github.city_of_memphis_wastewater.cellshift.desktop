@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+
+Name=CellShift
+Comment=Cast cell contents between comparable relative year-to-year standardized spreadsheets.
+
+Exec=cellshift
+
+Icon=io.github.city_of_memphis_wastewater.cellshift
+
+Terminal=false
+
+Categories=Office;Utility;
+
+StartupNotify=true

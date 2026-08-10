@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+
+  <id>io.github.city_of_memphis_wastewater.cellshift</id>
+
+  <name>CellShift</name>
+
+  <summary>Control Spreadsheet Data Migration In Standardized Forms.</summary>
+
+  <description>
+    <p>
+      CellShift is a tool for casting spreadsheets that experience cell address changes for known information. 
+      XLSX based contract files change year to year at the City of Memphis Department of Public Works. For example, an existing 2025 contract spreadsheet can be easily cast to a 2026 contract spreadsheet using CellShift.
+    </p>
+
+    <p>
+      The tool includes both a graphical interface and a CLI for automation.
+    </p>
+  </description>
+
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+
+  <developer id="io.github.city_of_memphis_wastewater">
+    <name>City of Memphis Wastewater</name>
+  </developer>
+
+  <url type="homepage">
+    https://github.com/City-of-Memphis-Wastewater/cellshift
+  </url>
+
+  <url type="bugtracker">
+    https://github.com/City-of-Memphis-Wastewater/cellshift/issues
+  </url>
+
+  <launchable type="desktop-id">
+    io.github.city_of_memphis_wastewater.cellshift.desktop
+  </launchable>
+
+  <provides>
+    <id>io.github.city_of_memphis_wastewater.cellshift.desktop</id>
+  </provides>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/City-of-Memphis-Wastewater/cellshift/main/assets/cellshift_gui_v0.2.10.png</image>
+      <caption>Spreadsheet cell relative casting</caption>
+    </screenshot>
+  </screenshots>
+
+  <categories>
+    <category>Office</category>
+    <category>Utility</category>
+  </categories>
+
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-info">none</content_attribute>
+  </content_rating>
+
+  <releases>
+    <release version="0.2.13" date="2026-07-02" />
+  </releases>
+
+</component>
