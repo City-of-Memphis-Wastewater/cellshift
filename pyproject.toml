@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 dynamic = ["version"]
-#license = "null" # not yet
+license = "MIT" 
 requires-python = ">=3.10,<3.15"
 authors = [
     { name = "George Clayton Bennett", email = "george.bennett@memphistn.gov" },
