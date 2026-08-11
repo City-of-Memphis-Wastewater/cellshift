@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from cellshift._version import __version__
 from cellshift.context import SRC_FOLDER_NAME
-from cellshift.paths import get_icns_icon, get_ico_icon, get_png_icon
+from cellshift.paths import get_icns_icon, get_ico_icon
 from maxson_build_utils.build_executable import run_build_executable
 
 if __name__ == "__main__":

@@ -6,21 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-executable:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
-      - run: |
-          uv sync --group dev
-          uv pip install maxson-build-utils
-          uv run python build_executable.py
-
   appimage:
     # Explicitly grant write access so the called reusable workflow can inherit it
     permissions:
       contents: write
     uses: City-of-Memphis-Wastewater/maxson-build-utils/.github/workflows/reusable-appimage.yml@main
     with:
+      build_script: "build_executable.py"
       pretty_name: "CellShift"
       icon_path: "src/cellshift/data/icons/placeholder_1024x1024.png"
