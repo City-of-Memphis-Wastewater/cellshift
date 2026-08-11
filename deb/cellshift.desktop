@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CellShift
+Exec=cellshift
+Icon=cellshift
+Type=Application
+Categories=Utility;
+Terminal=false
+StartupNotify=true
