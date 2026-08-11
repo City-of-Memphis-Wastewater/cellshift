@@ -16,7 +16,6 @@ if __name__ == "__main__":
     run_build_executable(
         src_folder_name=SRC_FOLDER_NAME,
         version=__version__,
-        icon_png_path=get_png_icon(),
         icon_ico_path=get_ico_icon(),
         icon_icns_path=get_icns_icon(),
         collect_data_pkgs=[SRC_FOLDER_NAME],
