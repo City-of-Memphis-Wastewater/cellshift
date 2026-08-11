@@ -1,4 +1,4 @@
-name: Build Flatpak Bundle
+name: Build Flatpak
 
 on:
   release:
@@ -7,70 +7,10 @@ on:
 
 jobs:
   flatpak:
-    name: Build Flatpak Application
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/flathub-infra/flatpak-github-actions:freedesktop-24.08
-      options: --privileged
     permissions:
       contents: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          version: "latest"
-
-      - name: Generate requirements.txt
-        run: uv export --format requirements-txt --no-editable --no-dev > requirements.txt
-
-      - name: Vendor Flatpak Assets
-        run: uv run maxson-build-utils prepare-flatpak
-
-      - name: Verify vendored wheels
-        run: |
-          echo "Vendored wheels count: $(find vendor-wheels -name '*.whl' | wc -l)"
-          ls -lah vendor-wheels
-
-      - name: Compute build metadata
-        run: |
-          VERSION=$(uv run python -c "from cellshift._version import get_version; print(get_version())")
-          ARCH=$(uname -m)
-          SHA=$(echo $GITHUB_SHA | cut -c1-7)
-          FILENAME="cellshift-${VERSION}-${ARCH}.flatpak"
-
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "ARCH=$ARCH" >> $GITHUB_ENV
-          echo "SHA=$SHA" >> $GITHUB_ENV
-          echo "FILENAME=$FILENAME" >> $GITHUB_ENV
-
-      - name: Build and Package Flatpak Bundle
-        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
-        with:
-          manifest-path: io.github.city_of_memphis_wastewater.cellshift.yaml
-          bundle: ${{ env.FILENAME }}
-          run-tests: false
-          cache-key: flatpak-builder-${{ github.sha }}
-
-      - name: Smoke test Flatpak installation
-        run: |
-          set -e
-          FLATPAK_FILE=$(find . -name "*.flatpak" | head -n 1)
-          flatpak install --user --bundle --noninteractive "$FLATPAK_FILE"
-          
-          flatpak run io.github.city_of_memphis_wastewater.cellshift --help
-          flatpak run io.github.city_of_memphis_wastewater.cellshift --version
-
-      - name: Attach Flatpak Asset to GitHub Release
-        if: github.event_name == 'release'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: "*.flatpak"
-          overwrite_files: true
-          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'v0.0.0-draft' }}
-          draft: ${{ github.event_name == 'workflow_dispatch' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    uses: City-of-Memphis-Wastewater/maxson-build-utils/.github/workflows/reusable-flatpak.yml@main
+    with:
+      manifest_path: "io.github.city_of_memphis_wastewater.cellshift.yaml"
+      app_id: "io.github.city_of_memphis_wastewater.cellshift"
+      app_name: "cellshift"
