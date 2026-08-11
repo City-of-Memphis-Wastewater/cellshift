@@ -6,6 +6,12 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ---
 
+## [0.1.2] - 2026-08-11
+### Added:
+- Consumption of maxson-build-utils stabilized at 0.1.10
+
+---
+
 ## [0.1.1] - 2026-08-04
 ### Added:
 - gui
