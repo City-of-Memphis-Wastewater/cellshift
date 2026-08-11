@@ -12,6 +12,7 @@ jobs:
       contents: write
     uses: City-of-Memphis-Wastewater/maxson-build-utils/.github/workflows/reusable-appimage.yml@main
     with:
+      build_script: "scripts/build_executable.py"
       app_dir: "dist/onedir/cellshift"
       exe_name: "cellshift"
       pretty_name: "CellShift"
