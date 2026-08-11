@@ -76,7 +76,7 @@ dev = [
     "ruff>=0.7.0 ; platform_system == 'Linux' and platform_machine != 'aarch64'", # to avoid on termux
     "pytest>=8.0.0",
     "pytest-cov>=4.1.0",
-    "maxson-build-utils>=0.1.8",
+    "maxson-build-utils>=0.1.9",
 ]
 
 
@@ -87,7 +87,7 @@ build-backend = "setuptools.build_meta"
 [tool.uv.sources]
 cellshift = { path = "src/cellshift" }
 #pyhabitat = { path = "../pyhabitat/dist/pyhabitat-1.2.3-py3-none-any.whl" }
-maxson-build-utils = { path = "../maxson-build-utils/", editable = true }
+#maxson-build-utils = { path = "../maxson-build-utils/", editable = true }
 
 
 [tool.setuptools.dynamic]
