@@ -11,6 +11,7 @@ The format is (read: strives to be) based on [Keep a Changelog](https://keepacha
 
 ### Changed:
 - Adjust .gitignore to not track deb/pkg or *.deb
+- Remove all ZoneIdentifier files, artifacts of manual windows copy in explorer.exe
 
 ---
 
