@@ -63,7 +63,6 @@ jobs:
           
           flatpak run io.github.city_of_memphis_wastewater.cellshift --help
           flatpak run io.github.city_of_memphis_wastewater.cellshift --version
-          flatpak run io.github.city_of_memphis_wastewater.cellshift copylaunch --help
 
       - name: Attach Flatpak Asset to GitHub Release
         if: github.event_name == 'release'

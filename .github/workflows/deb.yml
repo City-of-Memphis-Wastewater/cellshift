@@ -59,7 +59,7 @@ jobs:
 
           # Icons
           mkdir -p deb/pkg/usr/share/icons/hicolor/scalable/apps
-          cp src/cellshift/data/icons/max-green.svg "deb/pkg/usr/share/icons/hicolor/scalable/apps/$APP_NAME.svg"
+          cp src/cellshift/data/icons/placeholder.svg "deb/pkg/usr/share/icons/hicolor/scalable/apps/$APP_NAME.svg"
 
       # ------------------------------------------------------------
       # Render control file & build .deb package via maxson-build-utils
