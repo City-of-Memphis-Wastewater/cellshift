@@ -13,3 +13,7 @@ vendor-wheels/
 
 # Virtual environments
 .venv
+
+# Special builds
+*.deb
+deb/pkg/
