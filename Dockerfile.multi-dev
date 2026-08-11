@@ -17,6 +17,7 @@ COPY . .
 
 # Sync main dependencies + dev group into system environment
 RUN uv sync --system --group dev
+#RUN pip install --no-cache-dir -e
 
 EXPOSE 8000
 
