@@ -12,7 +12,7 @@ jobs:
     uses: City-of-Memphis-Wastewater/maxson-build-utils/.github/workflows/reusable-flatpak.yml@main
     with:
       desktop_path: "packaging/flatpak/io.github.city_of_memphis_wastewater.cellshift.desktop"
-      metainfo_path: "packaging/flatpak/io.github.city_of_memphis_wastewater.metainfo.xml"
+      metainfo_path: "packaging/flatpak/io.github.city_of_memphis_wastewater.cellshift.metainfo.xml"
       manifest_path: "packaging/flatpak/io.github.city_of_memphis_wastewater.cellshift.yaml"
       app_id: "io.github.city_of_memphis_wastewater.cellshift"
       app_name: "cellshift"
