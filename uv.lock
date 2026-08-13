@@ -70,7 +70,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "build", specifier = ">=1.3.0" },
-    { name = "maxson-build-utils", specifier = ">=0.1.17" },
+    { name = "maxson-build-utils", specifier = ">=0.1.19" },
     { name = "pyinstaller", marker = "platform_machine != 'aarch64' and sys_platform == 'linux'", specifier = ">=6.17.0" },
     { name = "pytest", specifier = ">=8.0.0" },
     { name = "pytest-cov", specifier = ">=4.1.0" },
@@ -279,7 +279,7 @@ wheels = [
 
 [[package]]
 name = "maxson-build-utils"
-version = "0.1.17"
+version = "0.1.19"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dworshak-config" },
@@ -287,9 +287,9 @@ dependencies = [
     { name = "typer" },
     { name = "typer-helptree" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/e2/d1/9044fba89f4a55b66fd3e82837f98875c08bd5b9b2505bb21a60734d9e0c/maxson_build_utils-0.1.17.tar.gz", hash = "sha256:4d3215484a8aa8a1a41157f4111cea0692cbda1ceb2251d4c289a11f1f9469aa", size = 17464, upload-time = "2026-08-12T23:26:27.46Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f1/9a/374eefb0a5ebcd1d26d544bed2548d52cca30f7b5dd0af2d842f4b461dad/maxson_build_utils-0.1.19.tar.gz", hash = "sha256:44a32c38da97407446fe5236581cc800e59ffa57c1d4c199a197c01d4000f084", size = 419741, upload-time = "2026-08-13T07:27:55.701Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/99/27/047c06db6052376e0fbb03430eb291a66cf86f597a78055a97511340b9a4/maxson_build_utils-0.1.17-py3-none-any.whl", hash = "sha256:bc7d14bca44435eccea8bf2ea5f2c2d0110b3d914a3ec93807bc51fecf78eb4e", size = 22670, upload-time = "2026-08-12T23:26:26.261Z" },
+    { url = "https://files.pythonhosted.org/packages/ed/48/64e1f51e546268f1503c39db7b364a272d7b810a65517f872260f3604fea/maxson_build_utils-0.1.19-py3-none-any.whl", hash = "sha256:328409167ab4de9e9f3197e281434a40d6d7e4cf5d3bede3f1bfb7a707020b5a", size = 428242, upload-time = "2026-08-13T07:27:54.334Z" },
 ]
 
 [[package]]
